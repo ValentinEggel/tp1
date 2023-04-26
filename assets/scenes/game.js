@@ -2,6 +2,7 @@ import { SHAPES } from "../../utils.js";
 const { TRIANGLE, SQUARE, DIAMOND, PELOTA } = SHAPES;
 
 export default class Game extends Phaser.Scene {
+  score;
   constructor() {
     super("game");
   }
@@ -60,6 +61,12 @@ export default class Game extends Phaser.Scene {
       null,
       this
     );
+    this.score = 0;
+    this.scoreText = this.add.text(20, 20, "Score " + this.score, {
+      fontsize: "32px",
+      Fontstyle: "bold",
+      fill: "#FFFFFF",
+    });
   }
 
   update() {
@@ -97,6 +104,11 @@ export default class Game extends Phaser.Scene {
     shape.disableBody(true, true);
     const ShapeName = shape.texture.key;
     this.shapesRecolected[ShapeName].count++;
+    console.log(this.shapesRecolected);
+
+    this.score += this.shapesRecolected[ShapeName].score;
+    console.log(this.shapesRecolected[ShapeName].score);
+    this.scoreText.setText("Score:" + this.score.toString());
     console.log(this.shapesRecolected);
   }
 }
